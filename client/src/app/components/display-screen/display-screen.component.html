@@ -1,0 +1,53 @@
+<div class="container">
+  <mat-card class="display-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>apps</mat-icon>
+        מחולל קומבינציות - N = {{ sessionData?.n }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        סה"כ {{ sessionData?.totalPermutations | number }} קומבינציות אפשריות
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="current-permutation" *ngIf="currentPermutation">
+        <h2>קומבינציה מספר {{ currentPermutation.sequenceNumber | number }}</h2>
+        <div class="permutation-display">
+          <mat-chip-set>
+            <mat-chip *ngFor="let num of currentPermutation.permutation.slice().reverse()" color="primary">
+              {{ num }}
+            </mat-chip>
+          </mat-chip-set>
+        </div>
+        <p class="message">{{ currentPermutation.message }}</p>
+      </div>
+
+      <div class="no-permutation" *ngIf="!currentPermutation && !loading">
+        <mat-icon>info</mat-icon>
+        <p>לחץ על "הבא" כדי להציג קומבינציה</p>
+      </div>
+
+      <div class="loading" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions class="actions">
+      <button mat-raised-button color="accent" (click)="onReset()" [disabled]="loading">
+        <mat-icon>refresh</mat-icon>
+        איפוס
+      </button>
+
+      <button mat-raised-button color="primary" (click)="onNext()" [disabled]="loading || !canGoNext()">
+        <mat-icon>arrow_back</mat-icon>
+        הבא
+      </button>
+
+      <button mat-raised-button color="primary" (click)="onShowAll()" [disabled]="loading || !canGoNext()">
+        <mat-icon>view_list</mat-icon>
+        כל הקומבינציות
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

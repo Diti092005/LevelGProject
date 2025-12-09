@@ -1,0 +1,57 @@
+<div class="container">
+  <mat-card class="pagination-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>view_list</mat-icon>
+        כל הקומבינציות - N = {{ sessionData?.n }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        סה"כ {{ sessionData?.totalPermutations | number }} קומבינציות
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="permutations-list" *ngIf="permutations.length > 0 && !loading">
+        <div class="permutation-item" *ngFor="let perm of permutations; let i = index">
+          <div class="perm-number">{{ startIndex + i +1}}</div>
+          <div class="perm-values">
+            <mat-chip-set>
+              <mat-chip *ngFor="let num of perm.slice().reverse()">{{ num }}</mat-chip>
+            </mat-chip-set>
+          </div>
+        </div>
+      </div>
+
+      <div class="loading" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+        <p>{{ loadingMessage }}</p>
+      </div>
+
+      <div class="pagination-info" *ngIf="!loading && permutations.length > 0">
+        <div class="page-size-selector">
+          <label for="pageSize"><b>מספר פריטים בדף:</b></label>
+          <select id="pageSize" [(ngModel)]="pageSize" (change)="onPageSizeChange()">
+            <option [value]="10">10</option>
+            <option [value]="20">20</option>
+            <option [value]="50">50</option>
+            <option [value]="100">100</option>
+          </select>
+        </div>
+          <app-page-navigation [currentPage]="currentPage" [totalPages]="totalPages" [canGoNext]="canGoToNextPage()"
+            [canGoPrevious]="canGoToPreviousPage()" (firstPage)="onFirstPage()" (previousPage)="onPreviousPage()"
+            (nextPage)="onNextPage()" (lastPage)="goToLastPage()" (goToPage)="onGoToPage($event)">
+          </app-page-navigation>
+
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <div class="pagination-buttons">
+        <button mat-raised-button color="accent" (click)="onBack()">
+          <mat-icon>arrow_back</mat-icon>
+          חזור
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

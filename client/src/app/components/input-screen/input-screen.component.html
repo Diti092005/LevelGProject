@@ -1,0 +1,49 @@
+<div class="container">
+  <mat-card class="input-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>calculate</mat-icon>
+        מחולל קומבינציות
+      </mat-card-title>
+      <mat-card-subtitle>הכנס מספר בין 1 ל-20</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>ערך N</mat-label>
+        <input 
+          matInput 
+          type="number" 
+          [(ngModel)]="n" 
+          min="1" 
+          max="20"
+          (keyup.enter)="onStart()"
+          placeholder="הכנס מספר בין 1 ל-20">
+        <mat-icon matPrefix>looks_one</mat-icon>
+      </mat-form-field>
+
+      <div class="info-text" *ngIf="n && n >= 1 && n <= 20">
+        <mat-icon>info</mat-icon>
+        <span>סה"כ קומבינציות אפשריות: {{ calculateFactorial(n) | number }}</span>
+      </div>
+
+      <div class="error-text" *ngIf="n && (n < 1 || n > 20)">
+        <mat-icon>error</mat-icon>
+        <span>המספר חייב להיות בין 1 ל-20</span>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions>
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="onStart()"
+        [disabled]="!n || n < 1 || n > 20 || loading"
+        class="start-button">
+        <mat-icon *ngIf="!loading">play_arrow</mat-icon>
+        <mat-spinner *ngIf="loading" diameter="20"></mat-spinner>
+        התחל
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

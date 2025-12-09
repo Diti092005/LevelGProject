@@ -1,0 +1,6 @@
+@PermutationGeneratorAPI_HostAddress = http://localhost:5091
+
+GET {{PermutationGeneratorAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

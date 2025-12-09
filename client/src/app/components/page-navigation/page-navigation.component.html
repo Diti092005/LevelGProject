@@ -1,0 +1,33 @@
+<div class="page-navigation">
+    <div class="navigation-controls">
+        <div class="button-row">
+            <button class="nav-button first" [disabled]="!canGoPrevious" (click)="firstPage.emit()" title="דף ראשון">
+                <span class="icon">⟪</span>
+            </button>
+
+            <button class="nav-button prev" [disabled]="!canGoPrevious" (click)="previousPage.emit()" title="דף קודם">
+                <span class="icon">‹</span>
+            </button>
+
+            <button class="nav-button next" [disabled]="!canGoNext" (click)="nextPage.emit()" title="דף הבא">
+                <span class="icon">›</span>
+            </button>
+
+            <button class="nav-button last" [disabled]="!canGoNext" (click)="lastPage.emit()" title="דף אחרון">
+                <span class="icon">⟫</span>
+            </button>
+        </div>
+
+        <div class="page-input-row">
+            <span class="current-page-info"><b>דף {{ currentPage | number }}</b></span>
+            <label for="pageInput"><b>עבור לדף:</b></label>
+            <input id="pageInput" type="number" [(ngModel)]="pageInput" [min]="1" [max]="totalPages" placeholder="1"
+                (keyup.enter)="onPageInputSubmit()">
+            <span class="page-range"><b>מתוך: {{ totalPages | number }} דפים </b></span>
+            <button class="go-button" (click)="onPageInputSubmit()"
+                [disabled]="!pageInput || pageInput < 1 || pageInput > totalPages">
+                עבור
+            </button>
+        </div>
+    </div>
+</div>
