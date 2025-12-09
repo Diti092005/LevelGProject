@@ -109,7 +109,7 @@
 
 ### Server
 ```powershell
-cd server/PermutationGeneratorAPI
+cd server
 dotnet run
 ```
 Server יעלה על: `http://localhost:5000`
