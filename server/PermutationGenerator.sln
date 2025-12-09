@@ -2,7 +2,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.2.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationGeneratorAPI", "PermutationGeneratorAPI\PermutationGeneratorAPI.csproj", "{3111640E-5380-75C6-5991-44D22E1B585F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PermutationGeneratorAPI", "PermutationGeneratorAPI.csproj", "{3111640E-5380-75C6-5991-44D22E1B585F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
