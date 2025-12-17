@@ -34,7 +34,7 @@
 ### API Endpoints
 
 | Endpoint | Method | תיאור |
-|----------|--------|-------|
+|---------:|-------:|------:|
 | `/api/permutation/start` | POST | יצירת סשן חדש |
 | `/api/permutation/next` | POST | קומבינציה הבאה |
 | `/api/permutation/all` | POST | דף קומבינציות (pagination) |
@@ -261,7 +261,7 @@ builder.Services.AddScoped<ISessionManager, RedisSessionManager>();
 ## 📈 ביצועים
 
 | n | Total Permutations | זמן חישוב (ממוצע) |
-|---|-------------------|--------------------|
+|--:|------------------:|-------------------:|
 | 5 | 120 | < 1ms |
 | 10 | 3,628,800 | ~5ms |
 | 15 | 1.3T | ~15ms |
