@@ -111,45 +111,36 @@ namespace PermutationGeneratorAPI.Services
 
             List<int[]> permutations = new List<int[]>();
             
-            bool useNextPermutation = session.CurrentPermutation != null && 
-                                      actualStartIndex == session.CurrentIndex;
-
-            if (useNextPermutation)
+            try
             {
-                int[] current = (int[])session.CurrentPermutation!.Clone();
+                int[] firstPerm = _algorithm.GetPermutationByIndex(session.N, actualStartIndex);
+                permutations.Add(firstPerm);
                 
-                for (int i = 0; i < pageSize && actualStartIndex + i < session.TotalPermutations; i++)
+                if (pageSize > 1 && actualStartIndex + 1 < session.TotalPermutations)
                 {
-                    permutations.Add((int[])current.Clone());
+                    int[] current = (int[])firstPerm.Clone();
                     
-                    if (i < pageSize - 1 && actualStartIndex + i + 1 < session.TotalPermutations)
+                    for (int i = 1; i < pageSize && actualStartIndex + i < session.TotalPermutations; i++)
                     {
-                        if (!_nextPermutation.GetNextPermutation(current))
+                        if (_nextPermutation.GetNextPermutation(current))
+                        {
+                            permutations.Add((int[])current.Clone());
+                        }
+                        else
+                        {
+                            _logger.LogWarning($"Next permutation failed at iteration {i}");
                             break;
-                    }
-                }
-                
-                session.CurrentIndex = actualStartIndex + permutations.Count;
-                session.CurrentPermutation = permutations.Count > 0 ? permutations[^1] : session.CurrentPermutation;
-            }
-            else
-            {
-                for (long i = 0; i < pageSize && actualStartIndex + i < session.TotalPermutations; i++)
-                {
-                    try
-                    {
-                        int[] perm = _algorithm.GetPermutationByIndex(session.N, actualStartIndex + i);
-                        permutations.Add(perm);
-                    }
-                    catch (Exception ex)
-                    {
-                        _logger.LogWarning($"Failed to generate permutation at index {actualStartIndex + i}: {ex.Message}");
-                        continue;
+                        }
                     }
                 }
                 
                 session.CurrentIndex = actualStartIndex + permutations.Count;
                 session.CurrentPermutation = permutations.Count > 0 ? permutations[^1] : null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to generate permutations page: {ex.Message}");
+                throw;
             }
             
             _sessionManager.UpdateSession(sessionId, session);
